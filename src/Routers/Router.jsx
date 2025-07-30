@@ -1,3 +1,19 @@
 //Router는 Version 6 를 사용
-//ㅋㅋㅋㅋㅋ 김병호 오늘 오전 11시 30분 출근해서 오늘 오후 1시 30분 퇴근함
-//ㅋㅋㅋㅋㅋ 김병호 오늘 오전 11시 30분 출근해서 오늘 오후 1시 30분 퇴근함                  
+import { createBrowserRouter } from "react-router-dom";
+import Home from "../pages/Home";
+import App from "../App";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+]);
+
+export default router;
