@@ -1,17 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MenuData } from '../../mocdate/MenuData'
+import { MenuData } from '../../mocdata/MenuData'
+import { useNavigate } from 'react-router-dom'
 
 const Menu = () => {
+    const navigate = useNavigate()
   return (
-    <MenuContainer>
+    <MenuContainer> 
         <MenuList>
             {MenuData.map((menu) => (
-                <MenuLink key={menu.id}>{menu.name}</MenuLink>
+                <MenuLink 
+                key={menu.id} 
+                onClick={() => navigate(menu.path)}
+                >
+             {menu.name}
+             </MenuLink>
             ))}
-            <MenuLink2>로그인</MenuLink2>
+            <MenuLink2 onClick={() => navigate("/login")}>로그인</MenuLink2>
             <Slash>/</Slash>
-            <MenuLink2>회원가입</MenuLink2>
+            <MenuLink2 onClick={() => navigate("/signup")}>회원가입</MenuLink2>
         </MenuList>
     </MenuContainer>
   )
