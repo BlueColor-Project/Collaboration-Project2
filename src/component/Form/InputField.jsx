@@ -1,13 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const InputField = ({labeldata, typedata, ...rest}) => {
+const InputField = ({labeldata, typedata, passwordText, ...rest}) => {
   return (
 
           <InputGroup>
+          <InputContainer>
           <Label>{labeldata}</Label>
+          {passwordText && <Text>{passwordText}</Text>}
+          </InputContainer>
           <Input type={typedata} {...rest} />
         </InputGroup>
+
 
   )
 }
@@ -16,6 +20,12 @@ export default InputField
 
 const InputGroup = styled.div`
   margin-bottom: 20px;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Label = styled.label`
@@ -42,5 +52,16 @@ const Input = styled.input`
   
   &::placeholder {
     color: #aaa;
+  }
+`;
+
+const Text = styled.p`
+  color: #D3D3D3;
+  font-size: 14px;
+  margin-top: 4px;
+  text-align: right;
+  cursor: pointer;
+  &:hover {
+    color: #333;
   }
 `;
