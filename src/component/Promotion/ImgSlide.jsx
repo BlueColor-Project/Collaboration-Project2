@@ -13,6 +13,53 @@ const ImgSlide = () => {
     setCurrentSlide(index);
   };
 
+  const NextArrow = (props) => {
+    const { onClick, className } = props;
+    return (
+      <FaChevronCircleRight
+      className={className}
+      onClick={onClick}
+      style={{
+        position: 'absolute',
+        right: '20px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        fontSize: '30px',
+        cursor: 'pointer',
+        color: '#fff',
+        '&:hover': {
+          color: '#D9D9D9',
+          transform: 'translateY(-50%) scale(1.1)',
+          transition: 'all 0.5s ease'
+        }
+      }}
+       />
+    )
+  } 
+
+  const PrevArrow = (props) => {
+    const {  onClick, className } = props;
+    return (
+      <FaChevronCircleLeft
+      className={className}
+      style={{
+        position: 'absolute',
+        left: '20px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        fontSize: '30px',
+        cursor: 'pointer',
+        color: '#fff',
+        '&:hover': {
+          color: '#D9D9D9',
+          transform: 'translateY(-50%) scale(1.1)',
+          transition: 'all 0.5s ease'
+        }
+      }}
+      onClick={onClick} />
+    )
+  }
+
   const settings = {
     dots: true,
     dotsClass: "slick-dots",
@@ -20,7 +67,6 @@ const ImgSlide = () => {
       <div className="slick-dot">
         <Dot active={i === currentSlide} onClick={() => handleSlideChange(i)}/>
       </div>
-
     ),
     infinite: true,
     speed: 500,
@@ -30,8 +76,9 @@ const ImgSlide = () => {
     autoplaySpeed: 5000,
     cssEase: "linear",
     nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    prevArrow: <PrevArrow />
   };
+
 
   return (
     <ImgSlideContainer>
@@ -69,6 +116,7 @@ const ImgSlideContainer = styled.div`
     height: 500px;
     background-color: #141D2F;
     position: relative;
+    overflow: visible;
 `
 const SliderContainer = styled.div`
     position: relative;
@@ -79,31 +127,6 @@ const ImgSlideImg = styled.img`
     position: relative;
     width: 100%;
     height: 500px;
-`
-
-const NextArrow = styled(FaChevronCircleRight)`
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 30px;
-    cursor: pointer;
-    color: #fff;
-    &:hover {
-        color: #D9D9D9;
-        transform: translateY(-50%) scale(1.1);
-        transition: all 0.5s ease;
-    }
-`
-
-const PrevArrow = styled(FaChevronCircleLeft)`
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 30px;
-    color: #fff;
-    cursor: pointer;
 `
 
 const Description = styled.div`
