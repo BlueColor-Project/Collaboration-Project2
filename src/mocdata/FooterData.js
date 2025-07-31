@@ -1,22 +1,28 @@
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+
 export const FooterIconData = [
     {
         id: 1,
-        icon: <FaFacebookF />,
+        iconName: 'FaFacebookF',
+        Icon: FaFacebookF,
         path: "/facebook"
     },
     {
         id: 2,
-        icon: <FaTwitter />,
+        iconName: 'FaTwitter',
+        Icon: FaTwitter,
         path: "/twitter"
     },
     {
         id: 3,
-        icon: <FaInstagram />,
+        iconName: 'FaInstagram',
+        Icon: FaInstagram,
         path: "/instagram"
     },
     {
         id: 4,
-        icon: <FaLinkedinIn />,
+        iconName: 'FaLinkedinIn',
+        Icon: FaLinkedinIn,
         path: "/linkedin"
     }
 ]
