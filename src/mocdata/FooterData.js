@@ -1,28 +1,3 @@
-export const FooterIconData = [
-    {
-        id: 1,
-        icon: <FaFacebookF />,
-        path: "/facebook"
-    },
-    {
-        id: 2,
-        icon: <FaTwitter />,
-        path: "/twitter"
-    },
-    {
-        id: 3,
-        icon: <FaInstagram />,
-        path: "/instagram"
-    },
-    {
-        id: 4,
-        icon: <FaLinkedinIn />,
-        path: "/linkedin"
-    }
-]
-
-
-
 export const ColumnData = [
     {
         id: 1,

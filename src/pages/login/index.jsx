@@ -1,33 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaGoogle, FaGithub, FaFacebookF } from 'react-icons/fa';
 import InputField from '../../component/Form/InputField';
 import { useNavigate } from 'react-router-dom';
+import ButtonField from '../../component/Form/ButtonField';
+
 const Login = () => {
   const navigate = useNavigate()
+
+  const [Email, setEmail] = useState('');
+
+  const InputEmail = (e) => {
+    setEmail(e.target.value);
+  }
 
   return (
     <LoginContainer>
       <LoginCard>
         <Title>로그인</Title>
-        <InputField labeldata="이메일 또는 사용자명" typedata="text" placeholder="이메일 또는 사용자명을 입력하세요" />
+        <InputField 
+        labeldata="이메일 또는 사용자명"
+        typedata="text"
+        placeholder="이메일 또는 사용자명을 입력하세요" 
+        maxLength={30}
+        OnChange={e => setEmail(setEmail)}
+        />
 
         <InputGroup>
-          <PasswordHeader>
-            <Label>비밀번호</Label>
-            <ForgotPassword>비밀번호를 잊으셨나요?</ForgotPassword>
-          </PasswordHeader>
-          <Input type="password" placeholder="비밀번호를 입력하세요" />
+            <InputField labeldata="비밀번호" typedata="password" passwordText="비밀번호를 잊으셨나요?" placeholder="비밀번호를 입력하세요" maxLength={20}/>
         </InputGroup>
-
-        <LoginButton>로그인</LoginButton>
-
+          <ButtonField 
+          buttonText="로그인" 
+          backgroundcolor="#4285f4"
+          color="white"
+          width="100%"
+          padding="12px"
+          border="none"
+          borderRadius="6px"
+          fontSize="16px"
+          fontWeight="500"
+          cursor="pointer"
+          hoverbackgroundcolor="#3367d6"
+          />
         <Divider>
           <DividerLine />
           <DividerText>또는 다음으로 계속</DividerText>
           <DividerLine />
         </Divider>
-
         <SocialLoginContainer>
           <SocialButton>
             <FaGoogle />
@@ -39,7 +58,6 @@ const Login = () => {
             <FaFacebookF />
           </SocialButton>
         </SocialLoginContainer>
-
         <SignupLink>
           계정이 없으신가요? <SignupText onClick={() => navigate("/signup")}>회원가입</SignupText>
         </SignupLink>
@@ -64,6 +82,7 @@ const LoginCard = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
+  }
 `;
 
 const Title = styled.h1`
@@ -76,70 +95,6 @@ const Title = styled.h1`
 
 const InputGroup = styled.div`
   margin-bottom: 20px;
-`;
-
-const PasswordHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-`;
-
-const ForgotPassword = styled.a`
-  font-size: 14px;
-  color: #666;
-  text-decoration: none;
-  cursor: pointer;
-  
-  &:hover {
-    color: #333;
-  }
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.2s;
-  box-sizing: border-box;
-  
-  &:focus {
-    outline: none;
-    border-color: #4285f4;
-  }
-  
-  &::placeholder {
-    color: #aaa;
-  }
-`;
-
-const LoginButton = styled.button`
-  width: 100%;
-  padding: 12px;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-top: 12px;
-  margin-bottom: 24px;
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: #3367d6;
-  }
 `;
 
 const Divider = styled.div`
@@ -158,6 +113,7 @@ const DividerText = styled.span`
   padding: 0 16px;
   font-size: 14px;
   color: #666;
+  cursor: pointer;
 `;
 
 const SocialLoginContainer = styled.div`

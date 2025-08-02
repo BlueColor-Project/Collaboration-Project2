@@ -1,15 +1,20 @@
 import React from 'react'
 import ImgSlide from '../../component/Promotion/ImgSlide'
-import RangkingTitle from '../../component/Rangking/RangkingTitle'
-import RangkingCardSection from '../../component/Rangking/RangkingCard'
 import styled from 'styled-components'
+import CardSection from '../../component/Rangking/CardSection'
+import RangkingSection from '../../mocdata/RangkingSection'
+import TitleData from '../../component/Rangking/TitleData'
+import UserCardData from '../../mocdata/UserCardData'
 
 const Home = () => {
   return (
     <HomeContainer>
       <ImgSlide />
-      <RangkingTitle />
-      <RangkingCardSection/>
+      <TitleData title="이달의 랭킹 TOP5" text="가장 인기있는 게임을 만나보세요" />
+      <CardSection RangkingSection={RangkingSection} />
+      <TitleData title="이달의 인기 유저 TOP5" text="가장 인기있는 게임을 만나보세요" />
+      <CardSection RangkingSection={UserCardData} />
+      
     </HomeContainer>
   ) 
 } 
@@ -17,8 +22,6 @@ const Home = () => {
 export default Home
 
 const HomeContainer = styled.div`
-    width: 100%;
     background-color: #141D2F;
-    height: 150vh;
-    padding: 0 20px;
+    height: 170vh;
 `

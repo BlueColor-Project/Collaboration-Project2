@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Promotion1 from '../../images/promotion1.png'
+import Promotion2 from '../../images/promotion2.png'
+import Promotion3 from '../../images/promotion3.png'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from 'react-slick';
@@ -91,17 +93,17 @@ const ImgSlide = () => {
             </Description>
           </SliderContainer>
           <SliderContainer>
-            <ImgSlideImg src={Promotion1} alt="Promotion1"/>
+            <ImgSlideImg src={Promotion2} alt="Promotion1"/>
             <Description>
-            <ImgSlideTitle>판타지 of War</ImgSlideTitle>
-            <ImgSlideText>경험하지 못한 신비로운 전쟁의 세계</ImgSlideText>
+            <ImgSlideTitle>Ironfall: 최후의 성벽</ImgSlideTitle>
+            <ImgSlideText>당신은 마지막 방패이자, 인류의 희망이다</ImgSlideText>
             </Description>
           </SliderContainer>
           <SliderContainer>
-            <ImgSlideImg src={Promotion1} alt="Promotion1"/>
+            <ImgSlideImg src={Promotion3} alt="Promotion1"/>
             <Description>
-            <ImgSlideTitle>판타지 of War</ImgSlideTitle>
-            <ImgSlideText>경험하지 못한 신비로운 전쟁의 세계</ImgSlideText>
+            <ImgSlideTitle>Serene Valley (세린 밸리)</ImgSlideTitle>
+            <ImgSlideText>조용한 계곡에서 피어나는 당신만의 삶</ImgSlideText>
             </Description>
           </SliderContainer>
         </Slider>
