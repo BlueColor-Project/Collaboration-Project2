@@ -242,6 +242,7 @@ const SignUpButton = styled.button`
 `;
 
 const LoginLink = styled.div`
+  margin-top: 20px;
   text-align: center;
   font-size: 14px;
   color: #666;

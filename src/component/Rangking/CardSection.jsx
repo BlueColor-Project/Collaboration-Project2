@@ -1,26 +1,31 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaStar } from "react-icons/fa";
+import TitleData from './TitleData'
 
 const CardSection = (props) => {
     return (
+        <>
         <RangkingCardContainer>
+            <CardGroupContainer>
           <CardGroup>
             {props.RangkingSection.map((item) => (
-              <CardBox key={item.id}>
+              <CardBox key={item.GameRanking}>
                 <CardImage src={item.image} alt="card" />
-                <NumberBox>{item.id}</NumberBox>
-                <CardTitle>{item.title}</CardTitle>
+                <NumberBox>{item.GameRanking}</NumberBox>
+                <CardTitle>{item.GameTitle}</CardTitle>
               <SudSection>
-                <CardSubTitle>{item.subTitle}</CardSubTitle>
+                <CardSubTitle>{item.GameGenre}</CardSubTitle>
                 <FaStar color="#E19010" size={20}/>
-                <CardSubText>{item.star}</CardSubText>
+                <CardSubText>{item.Rating}</CardSubText>
               </SudSection>
-              <CardText>{item.text}</CardText>
+              <CardText>{item.Description}</CardText>
             </CardBox>
             ))}
           </CardGroup>
+          </CardGroupContainer>
         </RangkingCardContainer>
+        </>
       )
 }
 
@@ -31,23 +36,24 @@ export default CardSection
 
 const RangkingCardContainer = styled.div`
     padding: 0 20px;
-    margin: 40px 0 0 0;
+`
+
+const CardGroupContainer = styled.div`
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
     width: 100%;
-    height: 100px;
 `
 
 const CardGroup = styled.div`
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
     gap: 20px;
 `
 
 const CardBox = styled.div`
     position: relative;
-    width: 270px;
-    height: 270px;
+    width: 278px;
+    height: 278px;
     background-color: #fff;
     border-radius: 15px;
 `
@@ -125,5 +131,6 @@ const CardText = styled.p`
     left: 10px;
     font-size: 14px;
     font-weight: 400;
+    padding: 0 10px;
     color:rgb(242, 225, 225);
 `

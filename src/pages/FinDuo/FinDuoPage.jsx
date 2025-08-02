@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FinDuoData } from '../../mocdata/FinDuoData';
+import ButtonField from '../../component/Form/ButtonField';
 
 const FinDuoPage = () => {
 
@@ -32,7 +33,19 @@ const FinDuoPage = () => {
               <PositionInfo>포지션: {gamer.position}</PositionInfo>
             </StatsSection>
             
-            <DuoButton>듀오 신청</DuoButton>
+            <ButtonField buttonText="듀오 신청"
+              width="100%"
+              padding="10px"
+              backgroundcolor="#4285f4"
+              color="white"
+              border="none"
+              borderRadius="6px"
+              fontSize="14px"
+              fontWeight="500"
+              cursor="pointer"
+              transition="background-color 0.2s"
+              hoverbackgroundcolor="#3367d6"
+            />
           </GamerCard>
         ))}
       </GamersGrid>
@@ -151,23 +164,6 @@ const LevelInfo = styled.div`
 const PositionInfo = styled.div`
   font-size: 14px;
   color: #666;
-`;
-
-const DuoButton = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: #3367d6;
-  }
 `;
 
 export default FinDuoPage;

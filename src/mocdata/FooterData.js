@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 export const FooterIconData = [
@@ -29,6 +30,8 @@ export const FooterIconData = [
 
 
 
+=======
+>>>>>>> dev
 export const ColumnData = [
     {
         id: 1,
