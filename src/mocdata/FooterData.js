@@ -1,37 +1,3 @@
-<<<<<<< HEAD
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-
-export const FooterIconData = [
-    {
-        id: 1,
-        iconName: 'FaFacebookF',
-        Icon: FaFacebookF,
-        path: "/facebook"
-    },
-    {
-        id: 2,
-        iconName: 'FaTwitter',
-        Icon: FaTwitter,
-        path: "/twitter"
-    },
-    {
-        id: 3,
-        iconName: 'FaInstagram',
-        Icon: FaInstagram,
-        path: "/instagram"
-    },
-    {
-        id: 4,
-        iconName: 'FaLinkedinIn',
-        Icon: FaLinkedinIn,
-        path: "/linkedin"
-    }
-]
-
-
-
-=======
->>>>>>> dev
 export const ColumnData = [
     {
         id: 1,
