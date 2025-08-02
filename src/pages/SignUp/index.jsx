@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import InputField from '../../component/Form/InputField';
+import ButtonField from '../../component/Form/ButtonField';
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -12,32 +14,20 @@ const SignUp = () => {
         
         <FormSection>
           <StepGroup>
-            <InputGroup>
-              <Label>이름</Label>
-              <Input type="text" placeholder="홍길동" />
-            </InputGroup>
+            <InputField labeldata="이름" typedata="text" placeholder="홍길동" />
           </StepGroup>
 
           <StepGroup>
-            <InputGroup>
-              <Label>이메일</Label>
-              <Input type="email" placeholder="example@email.com" />
-            </InputGroup>
+            <InputField labeldata="이메일" typedata="email" placeholder="example@email.com"/>
           </StepGroup>
 
           <StepGroup>
-            <InputGroup>
-              <Label>비밀번호</Label>
-              <Input type="password" placeholder="8자 이상 입력해주세요" />
-              <PasswordHelp>8자 이상, 영문, 숫자, 특수문자를 포함해주세요</PasswordHelp>
-            </InputGroup>
+            <InputField labeldata="비밀번호" typedata="password" placeholder="8자 이상 입력해주세요" />
+            <PasswordHelp>8자 이상, 영문, 숫자, 특수문자를 포함해주세요</PasswordHelp>
           </StepGroup>
 
           <StepGroup>
-            <InputGroup>
-              <Label>비밀번호 확인</Label>
-              <Input type="password" placeholder="비밀번호를 다시 입력해주세요" />
-            </InputGroup>
+            <InputField labeldata="비밀번호 확인" typedata="password" placeholder="비밀번호를 다시 입력해주세요" />
           </StepGroup>
         </FormSection>
 
@@ -51,7 +41,19 @@ const SignUp = () => {
           </CheckboxWrapper>
         </CheckboxSection>
 
-        <SignUpButton>회원가입</SignUpButton>
+        <ButtonField 
+        buttonText="회원가입"
+        backgroundcolor="#4285f4"
+        color="white"
+        width="100%"
+        padding="12px"
+        border="none"
+        borderRadius="6px"
+        fontSize="16px"
+        fontWeight="500"
+        cursor="pointer"
+        hoverbackgroundcolor="#3367d6"
+        />
 
         <LoginLink>
           이미 계정이 있으신가요? <LoginText onClick={() => navigate("/login")}>로그인</LoginText>
@@ -99,48 +101,14 @@ const FormSection = styled.div`
 `;
 
 const StepGroup = styled.div`
-  display: flex;
-  align-items: flex-start;
   margin-bottom: 24px;
-  gap: 16px;
-`;
-
-const InputGroup = styled.div`
-  flex: 1;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border-color 0.2s;
-  box-sizing: border-box;
-  
-  &:focus {
-    outline: none;
-    border-color: #4285f4;
-  }
-  
-  &::placeholder {
-    color: #aaa;
-  }
 `;
 
 const PasswordHelp = styled.p`
   font-size: 12px;
   color: #666;
   margin-top: 4px;
-  margin-bottom: 0;
+  margin: 0;
 `;
 
 const CheckboxSection = styled.div`
@@ -176,25 +144,8 @@ const TermsLink = styled.span`
   }
 `;
 
-const SignUpButton = styled.button`
-  width: 100%;
-  padding: 12px;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 24px;
-  transition: background-color 0.2s;
-  
-  &:hover {
-    background-color: #3367d6;
-  }
-`;
-
 const LoginLink = styled.div`
+  margin-top: 20px;
   text-align: center;
   font-size: 14px;
   color: #666;

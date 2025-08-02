@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ColumnData, FooterInfoData, FooterIconData } from '../../mocdata/FooterData'
-import { useNavigate } from 'react-router-dom'
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
+import { ColumnData, FooterInfoData } from '../../mocdata/FooterData'
+import ButtonField from '../Form/ButtonField'
 
 const Footer = () => {
-  const navigate = useNavigate()
   return (
     <FooterContainer>
       <FooterContent>
@@ -12,11 +12,18 @@ const Footer = () => {
           <Logo>DUO</Logo>
           <Slogan>협력적인 솔루션을 통한 혁신과 탁월함</Slogan>
           <SocialIcons>
-            {FooterIconData.map((item) => (
-              <SocialIcon key={item.id} onClick={() => navigate(item.path)}>
-                {item.icon}
-              </SocialIcon>
-            ))}
+            <SocialIcon>
+              <FaFacebookF />
+            </SocialIcon>
+            <SocialIcon>
+              <FaTwitter />
+            </SocialIcon>
+            <SocialIcon>
+              <FaInstagram />
+            </SocialIcon>
+            <SocialIcon>
+              <FaLinkedinIn />
+            </SocialIcon>
           </SocialIcons>
         </LeftSection>
 
@@ -40,7 +47,18 @@ const Footer = () => {
           <ColumnTitle>뉴스레터</ColumnTitle>
           <NewsletterForm>
             <EmailInput type="email" placeholder="이메일을 입력하세요" />
-            <SubscribeButton>구독하기</SubscribeButton>
+            <ButtonField buttonText="구독하기"
+             padding="12px 24px"
+             backgroundcolor="#4285f4"
+             color="white"
+             border="none"
+             borderRadius="6px"
+             fontSize="14px"
+             fontWeight="500"
+             cursor="pointer"
+             transition="background-color 0.2s"
+             hoverbackgroundcolor="#3367d6"
+            />
           </NewsletterForm>
         </RightSection>
       </FooterContent>
@@ -189,21 +207,5 @@ const EmailInput = styled.input`
   &:focus {
     outline: none;
     border-color: #4285f4;
-  }
-`
-
-const SubscribeButton = styled.button`
-  padding: 12px 24px;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #3367d6;
   }
 `

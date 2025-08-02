@@ -62,6 +62,6 @@ const Text = styled.p`
   text-align: right;
   cursor: pointer;
   &:hover {
-    color: #333;
+    color: #4285f4;
   }
 `;

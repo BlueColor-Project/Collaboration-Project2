@@ -3,47 +3,56 @@ import DressGame from '../images/dressgame.png'
 import FIFAgame from '../images/fifagame.png'
 import ZombieGame from '../images/zombiegame.png'
 import FightGame from '../images/fightgame.png'
+import FarmerGame from '../images/farmerGame.png'
 
 const RangkingSection = [
     {
-        id: 1,
+        GameRanking: 1,
         image: BlockBanner,
-        title: '블록게임',
-        subTitle: '아케이드',
-        star: 4.8,
-        text: '블록을 쌓고 부수는 게임'
+        GameTitle: '블록게임',
+        GameGenre: '아케이드',
+        Rating: 4.8,
+        Description: '블록을 쌓고 부수는 게임'
     },
     {
-        id: 2,
+        GameRanking: 2,
         image: DressGame,
-        title: '옷입히기 올라이브',
-        subTitle: '전체이용가',
-        star: 4.2,
-        text: '내맘대로 옷입히기'
+        GameTitle: '옷입히기 올라이브',
+        GameGenre: '전체이용가',
+        Rating: 4.2,
+        Description: '내맘대로 옷입히기'
     },
     {
-        id: 3,
+        GameRanking: 3,
         image: FIFAgame,
-        title: 'FIFA 2025',
-        subTitle: '스포츠',
-        star: 4.8,
-        text: '축구 게임' 
+        GameTitle: 'FIFA 2025',
+        GameGenre: '스포츠',
+        Rating: 4.8,
+        Description: '축구 게임' 
     },
     {
-        id: 4,
+        GameRanking: 4,
         image: ZombieGame,
-        title: '좀비 타워 디펜스',
-        subTitle: '액션 롤플레잉',
-        star: 4.8,
-        text: '좀비 타워 디펜스 게임'
+        GameTitle: '좀비 타워 디펜스',
+        GameGenre: '액션 롤플레잉',
+        Rating: 4.8,
+        Description: '좀비 타워 디펜스 게임'
     },
     {
-        id: 5,
+        GameRanking: 5,
         image: FightGame,
-        title: '파이트 레이스',
-        subTitle: '액션 게임',
-        star: 4.8,
-        text: '파이트 레이스 게임'
+        GameTitle: '파이트 레이스',
+        GameGenre: '액션 게임',
+        Rating: 4.8,
+        Description: '파이트 레이스 게임'
+    },
+    {
+        GameRanking: 6,
+        image: FarmerGame,
+        GameTitle: '농부이야기',
+        GameGenre: '힐링 게임',
+        Rating: 4.8,
+        Description: '고퀄리티 실사게임'
     }
     
 ]
