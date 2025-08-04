@@ -1,40 +1,80 @@
-//문제 1 : 기능 목록 정리 후 코드 작성 (비개발자가 생각했을 때 어떤식으로 UI가 흘러갈지 정리하기) - 30분 정도 소요 .. // 모르는거야
-// 1. 이름, 이메일, 비밀번호, 비밀번호 확인 입력 필드에 입력
-// 2.
-// 3.
-// 4.
-// 5.
-
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import InputField from "../../component/Form/InputField";
-import Logo from "@/component/Header/Logo";
+import { signUp } from "../../api/auth";
 
 const SignUp = () => {
-  // 문제 2:  화면에서 InputField 입력된 값들은 "기억할 상태"를 만들어서 저장! (뭘 사용해서 "상태를 만들어야 할까?")
-  // TIP: React에서 상태란 화면에서 어떤 변화가 일어나는 이유가 데이터(값)의 변화 때문이라면, 그 "데이터는 React에서 반드시 상태"로 관리해야 한다.
-
-  //문제 3: 화면에서 또 기억해야할 상태가 무엇이 있는지 생각해보자 (이용약관 동의 여부, 에러 메세지를 보여주기 위한 상태 저장)
-  //Tip: 체크박스, 버튼 클릭 여부 등 사용자의 행동에 따라 변경되는 상태는 반드시 상태로 관리해야 한다.
-  //질문!: 에러 메세지를 보여주기 위한 상태는 반드시 상태로 관리해야 한다. (이유가 무엇일지 생각해보기)
-
-  // 문제 4: 사용자가 입력 필드를 수정할 때 실행되는 함수(handleInputChange)를 만들어보세요
-  // e와 field를 받아서 setFormData로 업데이트 해야 함
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handleInputChange = (e, field) => {
-    // 여기에 상태 업데이트 코드를 작성해보세요
+    setFormData({
+      ...formData,
+      [field]: e.target.value,
+    });
+    setError("");
   };
-
-  // 문제 5: 회원가입 버튼을 눌렀을 때 유효성 검사를 할 validateForm 함수를 만들어보세요
 
   const validateForm = () => {
-    // 위 조건들을 if 문으로 검사하고, setError를 적절히 넣어보세요
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setError("모든 필드를 입력해주세요.");
+      return false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("비밀번호가 일치하지 않습니다.");
+      return false;
+    }
+
+    if (formData.password.length < 8) {
+      setError("비밀번호는 8자 이상이어야 합니다.");
+      return false;
+    }
+
+    if (!termsAccepted) {
+      setError("이용약관에 동의해주세요.");
+      return false;
+    }
+
+    return true;
   };
 
-  // 문제 6: 버튼 클릭 시 실행되는 handleSignUp 함수 작성
+  const handleSignUp = async (e) => {
+    e.preventDefault();
 
-  const handleSignUp = (e) => {
-    // 작성해보세요
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    try {
+      const { data, error } = await signUp({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+      });
+
+      if (error) throw new Error(error);
+
+      alert("회원가입이 완료되었습니다. 이메일 인증을 진행해주세요.");
+      navigate("/login");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -44,13 +84,20 @@ const SignUp = () => {
         <Subtitle>서비스 이용을 위한 계정을 만드세요</Subtitle>
 
         <FormSection>
-          {/* 문제 7: 아래 InputField 각각에 value와 onChange를 연결하세요 */}
-          <InputField labeldata="이름" typedata="text" placeholder="홍길동" />
+          <InputField
+            labeldata="이름"
+            typedata="text"
+            placeholder="홍길동"
+            value={formData.name}
+            onChange={(e) => handleInputChange(e, "name")}
+          />
 
           <InputField
             labeldata="이메일"
             typedata="email"
             placeholder="example@email.com"
+            value={formData.email}
+            onChange={(e) => handleInputChange(e, "email")}
           />
 
           <InputField
@@ -58,30 +105,39 @@ const SignUp = () => {
             typedata="password"
             placeholder="8자 이상 입력해주세요"
             Hint="8자 이상, 영문, 숫자, 특수문자를 포함해주세요"
+            value={formData.password}
+            onChange={(e) => handleInputChange(e, "password")}
           />
 
           <InputField
             labeldata="비밀번호 확인"
             typedata="password"
             placeholder="비밀번호를 다시 입력해주세요"
+            value={formData.confirmPassword}
+            onChange={(e) => handleInputChange(e, "confirmPassword")}
           />
         </FormSection>
 
-        {/* 문제 8: 에러 메시지가 있을 경우 화면에 표시 */}
-        {/* 힌트: error가 빈 문자열이 아니면 화면에 보여지게 조건부 렌더링 */}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
 
         <CheckboxSection>
           <CheckboxWrapper>
-            <Checkbox type="checkbox" />
-            <CheckboxLabel>
+            <Checkbox
+              type="checkbox"
+              id="terms"
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+            />
+            <CheckboxLabel htmlFor="terms">
               이용약관 및 개인정보 처리방침에 동의합니다
               <TermsLink>(보기)</TermsLink>
             </CheckboxLabel>
           </CheckboxWrapper>
         </CheckboxSection>
 
-        {/* 문제 10: 회원가입 버튼에 onClick 핸들러 연결 */}
-        <SignUpButton>회원가입</SignUpButton>
+        <SignUpButton onClick={handleSignUp} disabled={isLoading}>
+          {isLoading ? "처리중..." : "회원가입"}
+        </SignUpButton>
 
         <LoginLink>
           이미 계정이 있으신가요?{" "}
