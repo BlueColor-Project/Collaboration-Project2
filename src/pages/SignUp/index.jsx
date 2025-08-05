@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import InputField from '../../component/Form/InputField';
@@ -6,6 +6,47 @@ import ButtonField from '../../component/Form/ButtonField';
 
 const SignUp = () => {
   const navigate = useNavigate()
+
+ const [Name, setName] = useState('');
+ const [Email, setEmail] = useState('');
+ const [Password, setPassword] = useState('');
+ const [PasswordCheck, setPasswordCheck] = useState('');
+ const [ChackBox, setChackBox] = useState(false);
+
+
+ const SignUpInput = () => {
+  const NameBox = /^[a-zA-Z가-힣]*$/
+   const EmailBox =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+   const PasswordBox = /^.{8,}$/
+     
+   
+  if(NameBox.test(Name) === false) {
+    alert("특수기호, 공백 사용 불가");
+    setName('');
+  } else if (EmailBox.test(Email) === false) {
+    alert("올바른 이메일 형식을 입력해주세요");
+    setEmail('');
+  } else if (PasswordBox.test(Password) === false) {
+    alert("8자 이상 입력해주세요");
+    setPassword('');
+    setPasswordCheck('');
+  } else if (PasswordCheck !== Password) {
+    alert("비밀번호가 일치하지 않습니다.");
+    setPasswordCheck('');    
+  } else {
+    alert("회원가입 성공")  
+    navigate('/login');
+  } 
+ }
+
+ const ChackBoxInput = () => {
+  if (ChackBox === true) {
+    SignUpInput();
+  } else {
+  }
+ }
+
+
   return (
     <SignUpContainer>
       <SignUpCard>
@@ -14,26 +55,57 @@ const SignUp = () => {
         
         <FormSection>
           <StepGroup>
-            <InputField labeldata="이름" typedata="text" placeholder="홍길동" />
+            <InputField 
+            labeldata="이름" 
+            typedata="text" 
+            placeholder="홍길동" 
+            value={Name}
+            onChange={(e) => setName(e.target.value)}
+            />
           </StepGroup>
 
           <StepGroup>
-            <InputField labeldata="이메일" typedata="email" placeholder="example@email.com"/>
+            <InputField 
+            labeldata="이메일" 
+            typedata="email"
+            placeholder="example@email.com"
+            value={Email}
+            onChange={(e) => setEmail(e.target.value)}
+            />
           </StepGroup>
 
           <StepGroup>
-            <InputField labeldata="비밀번호" typedata="password" placeholder="8자 이상 입력해주세요" />
+            <InputField 
+            labeldata="비밀번호" 
+            typedata="password" 
+            placeholder="8자 이상 입력해주세요" 
+            value={Password}
+            onChange={(e) => setPassword(e.target.value)}
+            maxLength={20}
+            />
             <PasswordHelp>8자 이상, 영문, 숫자, 특수문자를 포함해주세요</PasswordHelp>
           </StepGroup>
 
           <StepGroup>
-            <InputField labeldata="비밀번호 확인" typedata="password" placeholder="비밀번호를 다시 입력해주세요" />
+            <InputField 
+            labeldata="비밀번호 확인" 
+            typedata="password" 
+            placeholder="비밀번호를 다시 입력해주세요" 
+            value={PasswordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
+            maxLength={20}
+            />
           </StepGroup>
         </FormSection>
 
         <CheckboxSection>
           <CheckboxWrapper>
-            <Checkbox type="checkbox" id="terms" />
+            <Checkbox 
+            type="checkbox" 
+            id="terms" 
+            checked={ChackBox}
+            onChange={() => setChackBox(!ChackBox)}
+            />
             <CheckboxLabel htmlFor="terms">
               이용약관 및 개인정보 처리방침에 동의합니다 
               <TermsLink>(보기)</TermsLink>
@@ -42,6 +114,9 @@ const SignUp = () => {
         </CheckboxSection>
 
         <ButtonField 
+        disabled={ChackBox === true ? false : true }
+        hoverbackgroundcolor={ChackBox === true ? "#3367d6" : "#4285f4"}
+        onClick={ChackBoxInput}
         buttonText="회원가입"
         backgroundcolor="#4285f4"
         color="white"
@@ -52,7 +127,6 @@ const SignUp = () => {
         fontSize="16px"
         fontWeight="500"
         cursor="pointer"
-        hoverbackgroundcolor="#3367d6"
         />
 
         <LoginLink>

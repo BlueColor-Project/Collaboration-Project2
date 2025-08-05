@@ -5,14 +5,51 @@ import InputField from '../../component/Form/InputField';
 import { useNavigate } from 'react-router-dom';
 import ButtonField from '../../component/Form/ButtonField';
 
+
+
+
 const Login = () => {
   const navigate = useNavigate()
 
   const [Email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
-  const InputEmail = (e) => {
-    setEmail(e.target.value);
+  const ClickLogin = () => {
+    const ValidEmail = "test@example.com"
+    const ValidEmailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const ValidPassword = "123456"
+    const PasswordRule = /^[a-zA-Z0-9]*$/
+
+    if (ValidEmailRule.test(Email) === false) {
+      alert("이메일 형식이 올바르지 않습니다.");
+      setEmail('');
+    } else if(PasswordRule.test(password) === false){
+      alert("비밀번호는 특수문자를 포함할 수 없습니다.");
+      setPassword('');
+    } else if(Email === ValidEmail && password === ValidPassword) {
+      alert("로그인 성공")
+      setEmail('');
+      setPassword('');
+      navigate('/');
+    }else {
+      alert("입력하신 정보가 일치하지 않습니다.")
+      setEmail('');
+      setPassword('');
+    }
   }
+
+   //1. 비밀번호 노출 버튼 생성
+ //2. 보기 버튼 클릭 시 "보기" -> "숨기기" 텍스트 변경
+ //3. 숨기기 버튼을 클릭 시 "숨기기" -> "보기" 텍스트 변경
+ //4. 버튼 "숨기기"로 변경 시 input type = "text"로 변경
+ //5. 버튼 "숨기기" -> "보기"로 변경 시 input type -> "password"로 변경
+
+  const TogglePassword = () => {
+    setShowPassword(ViewButton => !ViewButton);
+   }
+
+
 
   return (
     <LoginContainer>
@@ -22,12 +59,30 @@ const Login = () => {
         labeldata="이메일 또는 사용자명"
         typedata="text"
         placeholder="이메일 또는 사용자명을 입력하세요" 
+        value={Email}
+        onChange={(e) => setEmail(e.target.value)}
         maxLength={30}
-        OnChange={e => setEmail(setEmail)}
         />
 
         <InputGroup>
-            <InputField labeldata="비밀번호" typedata="password" passwordText="비밀번호를 잊으셨나요?" placeholder="비밀번호를 입력하세요" maxLength={20}/>
+          <PasswordHeader>
+            <InputField
+            labeldata="비밀번호" 
+            typedata={showPassword ? "password" : "text"}
+            passwordText="비밀번호를 잊으셨나요?" 
+            placeholder="비밀번호를 입력하세요" 
+            maxLength={20}
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            />
+            <ViewButton 
+            onClick={TogglePassword}
+            >
+            {showPassword ? "보기" : "숨기기"}
+            </ViewButton>
+          </PasswordHeader>
         </InputGroup>
           <ButtonField 
           buttonText="로그인" 
@@ -41,6 +96,7 @@ const Login = () => {
           fontWeight="500"
           cursor="pointer"
           hoverbackgroundcolor="#3367d6"
+          onClick={ClickLogin}
           />
         <Divider>
           <DividerLine />
@@ -95,6 +151,20 @@ const Title = styled.h1`
 
 const InputGroup = styled.div`
   margin-bottom: 20px;
+`;
+
+const PasswordHeader = styled.div`
+  position: relative;
+`;
+
+const ViewButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 70%;
+  transform: translateY(-50%);
 `;
 
 const Divider = styled.div`
