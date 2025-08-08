@@ -39,7 +39,6 @@ const SignUp = () => {
   const ChackBoxInput = () => {
     if (ChackBox === true) {
       handleSignUp();
-    } else {
     }
   }
 
