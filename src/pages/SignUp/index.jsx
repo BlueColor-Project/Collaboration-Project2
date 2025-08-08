@@ -5,83 +5,50 @@ import InputField from '../../component/Form/InputField';
 import ButtonField from '../../component/Form/ButtonField';
 import { supabase } from '../lib/supabaseClient';
 
-
 const SignUp = () => {
   const navigate = useNavigate()
 
- const [Name, setName] = useState('');
- const [Email, setEmail] = useState('');
- const [Password, setPassword] = useState('');
- const [PasswordCheck, setPasswordCheck] = useState('');
- const [ChackBox, setChackBox] = useState(false);
- const [SignUpError, setSignUpError] = useState(false);
+  const [Name, setName] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [PasswordCheck, setPasswordCheck] = useState('');
+  const [ChackBox, setChackBox] = useState(false);
+  const [SignUpError, setSignUpError] = useState(false);
 
- const handleSignUp = async () => {
-  const { data, error } = await supabase.auth.signUp({
-    email: Email,
-    password: Password,
-    options: {
-      data: {
-        name: Name,
+  const handleSignUp = async () => {
+    const { data, error } = await supabase.auth.signUp({
+      email: Email,
+      password: Password,
+      options: {
+        data: {
+          name: Name,
+        },
       },
-    },
-  });
+    });
 
-  if (error) {
-    console.error("회원가입 실패 상세:", error);
-    alert('회원가입 실패: ' + error.message);
-  } else {
-    alert('회원가입 성공!');
-    console.log(data);
-    navigate('/');
+    if (error) {
+      console.error("회원가입 실패 상세:", error);
+      alert('회원가입 실패: ' + error.message);
+    } else {
+      alert('회원가입 성공!');
+      console.log(data);
+      navigate('/');
+    }
   }
- }
 
-
-//  const SignUpInput = () => {
-//   const NameBox = /^[a-zA-Z가-힣]*$/
-//    const EmailBox =  /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-//    const PasswordBox = /^.{8,}$/
-     
-   
-//   if(NameBox.test(Name) === false) {
-//     alert("특수기호, 공백 사용 불가");
-//     setName('');
-//     setSignUpError(true);
-//   } else if (EmailBox.test(Email) === false) {
-//     alert("올바른 이메일 형식을 입력해주세요");
-//     setEmail('');
-//     setSignUpError(true);
-//   } else if (PasswordBox.test(Password) === false) {
-//     alert("8자 이상 입력해주세요");
-//     setPassword('');
-//     setPasswordCheck('');
-//     setSignUpError(true);
-//   } else if (PasswordCheck !== Password) {
-//     alert("비밀번호가 일치하지 않습니다.");
-//     setPasswordCheck('');
-//     setSignUpError(true);
-//   } else {
-//     alert("회원가입 성공");
-//     navigate('/login');
-//     setSignUpError(false);
-//   } 
-//  }
-
- const ChackBoxInput = () => {
-  if (ChackBox === true) {
-    SignUpInput();
-  } else {
+  const ChackBoxInput = () => {
+    if (ChackBox === true) {
+      handleSignUp();
+    } else {
+    }
   }
- }
-
 
   return (
     <SignUpContainer>
       <SignUpCard>
         <Title>회원가입</Title>
         <Subtitle>서비스 이용을 위한 계정을 만드세요</Subtitle>
-        
+
         <FormSection>
           <StepGroup>
             <InputField 
@@ -183,7 +150,8 @@ const SignUp = () => {
         />
 
         <LoginLink>
-          이미 계정이 있으신가요? <LoginText onClick={() => navigate("/login")}>로그인</LoginText>
+          이미 계정이 있으신가요?{" "}
+          <LoginText onClick={() => navigate("/login")}>로그인</LoginText>
         </LoginLink>
       </SignUpCard>
     </SignUpContainer>
@@ -228,14 +196,14 @@ const FormSection = styled.div`
 `;
 
 const StepGroup = styled.div`
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 `;
 
 const PasswordHelp = styled.p`
+  color: #5e5e5e;
   font-size: 12px;
-  color: #666;
   margin-top: 4px;
-  margin: 0;
+  text-align: left;
 `;
 
 const CheckboxSection = styled.div`
@@ -265,7 +233,7 @@ const CheckboxLabel = styled.label`
 const TermsLink = styled.span`
   color: #4285f4;
   cursor: pointer;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -281,7 +249,7 @@ const LoginLink = styled.div`
 const LoginText = styled.span`
   color: #4285f4;
   cursor: pointer;
-  
+
   &:hover {
     text-decoration: underline;
   }
