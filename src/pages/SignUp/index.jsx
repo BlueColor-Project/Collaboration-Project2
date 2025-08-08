@@ -1,41 +1,46 @@
-//문제 1 : 기능 목록 정리 후 코드 작성 (비개발자가 생각했을 때 어떤식으로 UI가 흘러갈지 정리하기) - 30분 정도 소요 .. // 모르는거야
-// 1. 이름, 이메일, 비밀번호, 비밀번호 확인 입력 필드에 입력
-// 2.
-// 3.
-// 4.
-// 5.
-
-import React, { useState } from "react";
-import styled from "styled-components";
-import InputField from "../../component/Form/InputField";
-import Logo from "@/component/Header/Logo";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import InputField from '../../component/Form/InputField';
+import ButtonField from '../../component/Form/ButtonField';
+import { supabase } from '../lib/supabaseClient';
 
 const SignUp = () => {
-  // 문제 2:  화면에서 InputField 입력된 값들은 "기억할 상태"를 만들어서 저장! (뭘 사용해서 "상태를 만들어야 할까?")
-  // TIP: React에서 상태란 화면에서 어떤 변화가 일어나는 이유가 데이터(값)의 변화 때문이라면, 그 "데이터는 React에서 반드시 상태"로 관리해야 한다.
+  const navigate = useNavigate()
 
-  //문제 3: 화면에서 또 기억해야할 상태가 무엇이 있는지 생각해보자 (이용약관 동의 여부, 에러 메세지를 보여주기 위한 상태 저장)
-  //Tip: 체크박스, 버튼 클릭 여부 등 사용자의 행동에 따라 변경되는 상태는 반드시 상태로 관리해야 한다.
-  //질문!: 에러 메세지를 보여주기 위한 상태는 반드시 상태로 관리해야 한다. (이유가 무엇일지 생각해보기)
+  const [Name, setName] = useState('');
+  const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [PasswordCheck, setPasswordCheck] = useState('');
+  const [ChackBox, setChackBox] = useState(false);
+  const [SignUpError, setSignUpError] = useState(false);
 
-  // 문제 4: 사용자가 입력 필드를 수정할 때 실행되는 함수(handleInputChange)를 만들어보세요
-  // e와 field를 받아서 setFormData로 업데이트 해야 함
+  const handleSignUp = async () => {
+    const { data, error } = await supabase.auth.signUp({
+      email: Email,
+      password: Password,
+      options: {
+        data: {
+          name: Name,
+        },
+      },
+    });
 
-  const handleInputChange = (e, field) => {
-    // 여기에 상태 업데이트 코드를 작성해보세요
-  };
+    if (error) {
+      console.error("회원가입 실패 상세:", error);
+      alert('회원가입 실패: ' + error.message);
+    } else {
+      alert('회원가입 성공!');
+      console.log(data);
+      navigate('/');
+    }
+  }
 
-  // 문제 5: 회원가입 버튼을 눌렀을 때 유효성 검사를 할 validateForm 함수를 만들어보세요
-
-  const validateForm = () => {
-    // 위 조건들을 if 문으로 검사하고, setError를 적절히 넣어보세요
-  };
-
-  // 문제 6: 버튼 클릭 시 실행되는 handleSignUp 함수 작성
-
-  const handleSignUp = (e) => {
-    // 작성해보세요
-  };
+  const ChackBoxInput = () => {
+    if (ChackBox === true) {
+      handleSignUp();
+    }
+  }
 
   return (
     <SignUpContainer>
@@ -44,44 +49,104 @@ const SignUp = () => {
         <Subtitle>서비스 이용을 위한 계정을 만드세요</Subtitle>
 
         <FormSection>
-          {/* 문제 7: 아래 InputField 각각에 value와 onChange를 연결하세요 */}
-          <InputField labeldata="이름" typedata="text" placeholder="홍길동" />
+          <StepGroup>
+            <InputField 
+            labeldata="이름" 
+            typedata="text" 
+            placeholder="홍길동" 
+            value={Name}
+            onChange={(e) => { 
+              setName(e.target.value)
+              setSignUpError(false)
+            }}
+            style={{
+              border: SignUpError ? "1px solid rgb(164, 2, 2)" : "1px solid #4285f4"
+            }}
+            />
+          </StepGroup>
 
-          <InputField
-            labeldata="이메일"
+          <StepGroup>
+            <InputField 
+            labeldata="이메일" 
             typedata="email"
             placeholder="example@email.com"
-          />
+            value={Email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+              setSignUpError(false)
+            }}
+            style={{
+              border: SignUpError ? "1px solid rgb(164, 2, 2)" : "1px solid #4285f4"
+            }}
+            />
+          </StepGroup>
 
-          <InputField
-            labeldata="비밀번호"
-            typedata="password"
-            placeholder="8자 이상 입력해주세요"
-            Hint="8자 이상, 영문, 숫자, 특수문자를 포함해주세요"
-          />
+          <StepGroup>
+            <InputField 
+            labeldata="비밀번호" 
+            typedata="password" 
+            placeholder="8자 이상 입력해주세요" 
+            value={Password}
+            onChange={(e) => {
+              setPassword(e.target.value)
+              setSignUpError(false)
+            }}
+            style={{
+              border: SignUpError ? "1px solid rgb(164, 2, 2)" : "1px solid #4285f4"
+            }}
+            maxLength={20}
+            />
+            <PasswordHelp>8자 이상, 영문, 숫자, 특수문자를 포함해주세요</PasswordHelp>
+          </StepGroup>
 
-          <InputField
-            labeldata="비밀번호 확인"
-            typedata="password"
-            placeholder="비밀번호를 다시 입력해주세요"
-          />
+          <StepGroup>
+            <InputField 
+            labeldata="비밀번호 확인" 
+            typedata="password" 
+            placeholder="비밀번호를 다시 입력해주세요" 
+            value={PasswordCheck}
+            onChange={(e) => {
+              setPasswordCheck(e.target.value)
+              setSignUpError(false)
+            }}
+            style={{
+              border: SignUpError ? "1px solid rgb(164, 2, 2)" : "1px solid #4285f4"
+            }}
+            maxLength={20}
+            />
+          </StepGroup>
         </FormSection>
-
-        {/* 문제 8: 에러 메시지가 있을 경우 화면에 표시 */}
-        {/* 힌트: error가 빈 문자열이 아니면 화면에 보여지게 조건부 렌더링 */}
 
         <CheckboxSection>
           <CheckboxWrapper>
-            <Checkbox type="checkbox" />
-            <CheckboxLabel>
-              이용약관 및 개인정보 처리방침에 동의합니다
+            <Checkbox 
+            type="checkbox" 
+            id="terms" 
+            checked={ChackBox}
+            onChange={() => setChackBox(!ChackBox)}
+            />
+            <CheckboxLabel htmlFor="terms">
+              이용약관 및 개인정보 처리방침에 동의합니다 
               <TermsLink>(보기)</TermsLink>
             </CheckboxLabel>
           </CheckboxWrapper>
         </CheckboxSection>
 
-        {/* 문제 10: 회원가입 버튼에 onClick 핸들러 연결 */}
-        <SignUpButton>회원가입</SignUpButton>
+        <ButtonField 
+        buttonText="회원가입"
+        backgroundcolor="#4285f4"
+        color="white"
+        width="100%"
+        padding="12px"
+        border="none"
+        borderRadius="6px"
+        fontSize="16px"
+        fontWeight="500"
+        cursor="pointer"
+        disabled={ChackBox === true ? false : true}
+        hoverbackgroundcolor={ChackBox === true ? "#3367d6" : "#4285f4"}
+        onClick={handleSignUp}
+        />
 
         <LoginLink>
           이미 계정이 있으신가요?{" "}
@@ -129,6 +194,17 @@ const FormSection = styled.div`
   margin-bottom: 24px;
 `;
 
+const StepGroup = styled.div`
+  margin-bottom: 20px;
+`;
+
+const PasswordHelp = styled.p`
+  color: #5e5e5e;
+  font-size: 12px;
+  margin-top: 4px;
+  text-align: left;
+`;
+
 const CheckboxSection = styled.div`
   margin-bottom: 24px;
 `;
@@ -162,29 +238,6 @@ const TermsLink = styled.span`
   }
 `;
 
-const SignUpButton = styled.button`
-  width: 100%;
-  padding: 12px;
-  background-color: #4285f4;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 24px;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #3367d6;
-  }
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-`;
-
 const LoginLink = styled.div`
   margin-top: 20px;
   text-align: center;
@@ -199,13 +252,6 @@ const LoginText = styled.span`
   &:hover {
     text-decoration: underline;
   }
-`;
-
-const ErrorMessage = styled.div`
-  color: #ff4444;
-  font-size: 14px;
-  margin-bottom: 16px;
-  text-align: center;
 `;
 
 export default SignUp;

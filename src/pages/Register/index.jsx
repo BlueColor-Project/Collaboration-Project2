@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../component/Form/InputField";
-import { signUp } from "../../api/auth";
+import { supabase } from "../../lib/supabaseClient";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -60,13 +60,17 @@ const SignUp = () => {
 
     setIsLoading(true);
     try {
-      const { data, error } = await signUp({
+      const { error } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
-        name: formData.name,
+        options: {
+          data: {
+            name: formData.name,
+          },
+        },
       });
 
-      if (error) throw new Error(error);
+      if (error) throw new Error(error.message);
 
       alert("회원가입이 완료되었습니다. 이메일 인증을 진행해주세요.");
       navigate("/login");

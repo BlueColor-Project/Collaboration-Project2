@@ -4,30 +4,121 @@ import { FaGoogle, FaGithub, FaFacebookF } from 'react-icons/fa';
 import InputField from '../../component/Form/InputField';
 import { useNavigate } from 'react-router-dom';
 import ButtonField from '../../component/Form/ButtonField';
+import { supabase } from '../lib/supabaseClient';
+
 
 const Login = () => {
   const navigate = useNavigate()
 
+
   const [Email, setEmail] = useState('');
+  const [Password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [LoginError, setLoginError] = useState(false);
 
-  const InputEmail = (e) => {
-    setEmail(e.target.value);
-  }
+  const handleLogin = async () => {
+    setLoading(true);
 
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: Email,
+      password: Password,
+    });
+
+
+    if (error) {
+      console.error("로그인 실패 상세:", error);
+  alert('로그인 실패: ' + error.message);
+    } else {
+      alert('로그인 성공!');
+      console.log(data);
+      navigate('/');
+    }
+    setLoading(false);
+  };
+
+
+  // const ClickLogin = () => {
+  //   const ValidEmail = "test@example.com"
+  //   const ValidEmailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  //   const ValidPassword = "123456"
+  //   const PasswordRule = /^[a-zA-Z0-9]*$/
+
+  //   if (ValidEmailRule.test(Email) === false) {
+  //     alert("이메일 형식이 올바르지 않습니다.");
+  //     setEmail('');
+  //     setLoginError(true);
+  //   } else if(PasswordRule.test(password) === false){
+  //     alert("비밀번호는 특수문자를 포함할 수 없습니다.");
+  //     setPassword('');
+  //     setLoginError(true);
+  //   } else if(Email === ValidEmail && password === ValidPassword) {
+  //     alert("로그인 성공")
+  //     setEmail('');
+  //     setPassword('');
+  //     navigate('/');
+  //     setLoginError(false);
+  //   }else {
+  //     alert("입력하신 정보가 일치하지 않습니다.")
+  //     setEmail('');
+  //     setPassword('');
+  //     setLoginError(true);
+  //   }
+  // }
+
+//    1. 비밀번호 노출 버튼 생성
+//  2. 보기 버튼 클릭 시 "보기" -> "숨기기" 텍스트 변경
+//  3. 숨기기 버튼을 클릭 시 "숨기기" -> "보기" 텍스트 변경
+//  4. 버튼 "숨기기"로 변경 시 input type = "text"로 변경
+//  5. 버튼 "숨기기" -> "보기"로 변경 시 input type -> "password"로 변경
+
+  const TogglePassword = () => {
+    setShowPassword(ViewButton => !ViewButton);
+   }
+
+   
   return (
     <LoginContainer>
       <LoginCard>
         <Title>로그인</Title>
         <InputField 
         labeldata="이메일 또는 사용자명"
-        typedata="text"
+        type="text"
         placeholder="이메일 또는 사용자명을 입력하세요" 
+        value={Email}
+        onChange={(e) => {
+          setEmail(e.target.value)
+          setLoginError(false)
+        }}
         maxLength={30}
-        OnChange={e => setEmail(setEmail)}
+        style={{
+          border: LoginError ? "1px solid rgb(164, 2, 2)" : "1px solid #4285f4"
+        }}
         />
 
         <InputGroup>
-            <InputField labeldata="비밀번호" typedata="password" passwordText="비밀번호를 잊으셨나요?" placeholder="비밀번호를 입력하세요" maxLength={20}/>
+          <PasswordHeader>
+            <InputField
+            labeldata="비밀번호" 
+            type={showPassword ? "text" : "password"}
+            passwordText="비밀번호를 잊으셨나요?" 
+            placeholder="비밀번호를 입력하세요" 
+            maxLength={20}
+            value={Password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setLoginError(false);
+            }}
+            style={{
+              border: LoginError ? "1px solid rgb(164, 2, 2)" : "1px solid #4285f4"
+            }}
+            />
+            <ViewButton 
+            onClick={TogglePassword}
+            >
+            {showPassword ? "보기" : "숨기기"}
+            </ViewButton>
+          </PasswordHeader>
         </InputGroup>
           <ButtonField 
           buttonText="로그인" 
@@ -40,8 +131,13 @@ const Login = () => {
           fontSize="16px"
           fontWeight="500"
           cursor="pointer"
+          disabled={loading}
           hoverbackgroundcolor="#3367d6"
-          />
+          onClick= {handleLogin}
+          isLoading={loading}
+          >
+           {loading ? '로그인 중...' : '로그인'}
+          </ButtonField>
         <Divider>
           <DividerLine />
           <DividerText>또는 다음으로 계속</DividerText>
@@ -95,6 +191,20 @@ const Title = styled.h1`
 
 const InputGroup = styled.div`
   margin-bottom: 20px;
+`;
+
+const PasswordHeader = styled.div`
+  position: relative;
+`;
+
+const ViewButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 70%;
+  transform: translateY(-50%);
 `;
 
 const Divider = styled.div`

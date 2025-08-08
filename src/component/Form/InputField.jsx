@@ -1,18 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 
-const InputField = ({ labeldata, typedata, passwordText, Hint, ...rest }) => {
+const InputField = ({labeldata, typedata, passwordText, Hint, ...rest}) => {
   return (
-    <InputGroup>
-      <InputContainer>
-        <Label>{labeldata}</Label>
-        {passwordText && <Text>{passwordText}</Text>}
-      </InputContainer>
-      <Input type={typedata} {...rest} />
-      {Hint && <HintText>{Hint}</HintText>}
-    </InputGroup>
-  );
-};
+
+          <InputGroup>
+          <InputContainer>
+          <Label>{labeldata}</Label>
+          {passwordText && <Text>{passwordText}</Text>}
+          </InputContainer>
+          <Input type={typedata} {...rest} />
+          {Hint && <HintText>{Hint}</HintText>}
+        </InputGroup>
+
+
+  )
+}
 
 export default InputField;
 
