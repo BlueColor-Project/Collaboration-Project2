@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const InputField = ({labeldata, typedata, passwordText, ...rest}) => {
+const InputField = ({labeldata, type, passwordText, ...rest}) => {
   return (
 
           <InputGroup>
@@ -9,7 +9,7 @@ const InputField = ({labeldata, typedata, passwordText, ...rest}) => {
           <Label>{labeldata}</Label>
           {passwordText && <Text>{passwordText}</Text>}
           </InputContainer>
-          <Input type={typedata} {...rest} />
+          <Input type={type} {...rest} />
         </InputGroup>
 
 

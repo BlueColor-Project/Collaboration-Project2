@@ -5,7 +5,10 @@ const ButtonField = ({buttonText, ...props}) => {
   return (
     <Button 
     {...props}
-    >{buttonText}</Button>
+    $borderRadius={props.borderRadius}
+    >
+      {buttonText}
+      </Button>
   )
 }
 
@@ -17,7 +20,7 @@ const Button = styled.button`
     background-color: ${props => props.backgroundcolor};
     color: ${props => props.color};
     border: ${props => props.border};
-    border-radius: ${props => props.borderRadius};
+    border-radius: ${props => props.$borderRadius};
     font-size: ${props => props.fontSize};
     cursor: ${props => props.cursor};
     transition: ${props => props.transition};

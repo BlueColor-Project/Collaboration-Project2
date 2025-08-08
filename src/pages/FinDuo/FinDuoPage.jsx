@@ -8,6 +8,19 @@ const FinDuoPage = () => {
   return (
     <Container>
       <Header>
+        <InputBox>
+        <OptionInput type="select" placeholder="전체" />
+          <MainInput type="text" placeholder="검색어를 입력하세요" />
+          <ButtonField buttonText="검색"
+          width="100px"
+          padding="13px 20px"
+          backgroundcolor="#4285f4"
+          color="white"
+          border="none"
+          borderRadius="0 6px 6px 0"
+          cursor="pointer"
+          />
+        </InputBox>
         <Title>듀오 찾기</Title>
         <Subtitle>함께 게임을 즐길 파트너를 찾아보세요!</Subtitle>
       </Header>
@@ -26,10 +39,12 @@ const FinDuoPage = () => {
             </ProfileSection>
             
             <StatsSection>
+              <BadgeSection>
               <TierBadge tierColor={gamer.tierColor}>
                 {gamer.tier}
               </TierBadge>
               <LevelInfo>레벨 {gamer.level}</LevelInfo>
+              </BadgeSection>
               <PositionInfo>포지션: {gamer.position}</PositionInfo>
             </StatsSection>
             
@@ -62,6 +77,31 @@ const Container = styled.div`
 const Header = styled.div`
   text-align: left;
   margin-bottom: 40px;
+`;
+
+const InputBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+`;
+
+const OptionInput = styled.select`
+  display: flex;
+  border: 1px solid #ccc;
+  width: 150px;
+  height: 50px;
+  align-items: center;
+  border-radius: 6px 0 0 6px;
+`;
+
+const MainInput = styled.input`
+  display: flex;
+  align-items: center;
+  width: 800px;
+  height: 50px;
+  border: 1px solid #ccc;
+  padding: 0 10px;
 `;
 
 const Title = styled.h1`
@@ -142,6 +182,13 @@ const GameName = styled.p`
 
 const StatsSection = styled.div`
   margin-bottom: 20px;
+`;
+
+const BadgeSection = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  gap: 8px;
 `;
 
 const TierBadge = styled.span`

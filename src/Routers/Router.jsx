@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import App from "../App";
 import Login from "../pages/Login";
 import SignUp from "../pages/SignUp";
+import Community from "../pages/Community/Community";
 import FinDuoPage from "../pages/FinDuo/FinDuoPage";
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         {
           path: "/signup",
           element: <SignUp />,
+        },
+        {
+          path: "/community",
+          element: <Community />,
         },
         {
           path: "/fin-duo",
